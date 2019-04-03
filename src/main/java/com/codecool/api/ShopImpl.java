@@ -45,13 +45,29 @@ public class ShopImpl implements Shop {
     @Override
     public List<Product> getProducts() throws ShopIsClosedException {
         if (isOpen == true){
-
+            List<Product> productlist = new ArrayList<Product>();
+            for(ShopEntryImpl iter : products.values()){
+                if(iter.getQuantity() >= 1){
+                    productlist.add(iter.getProduct());
+                }
+            }return productlist;
+        }else{
+            throw new ShopIsClosedException();
         }
     }
 
     @Override
     public Product findByName(String name) throws NoSuchProductException, ShopIsClosedException {
-        return null;
+        if(isOpen == true){
+            for (ShopEntryImpl iter : products.values()){
+                if(name.equalsIgnoreCase(iter.getProduct().getName())){
+                    return iter.getProduct();
+                }
+            }
+            throw new NoSuchProductException();
+        }else{
+            throw new ShopIsClosedException();
+        }
     }
 
     @Override
@@ -85,7 +101,7 @@ public class ShopImpl implements Shop {
     }
 
     public String toString(){
-        return null;
+        return "Name: " + name + " | Owner: " + owner;
     }
 
     private class ShopEntryImpl{
@@ -121,6 +137,14 @@ public class ShopImpl implements Shop {
 
         public void setPrice(float price) {
             this.price = price;
+        }
+
+        public void increase(int amount){
+            quantity += amount;
+        }
+
+        public void decrease(int amount){
+            quantity -= amount;
         }
 
     }
