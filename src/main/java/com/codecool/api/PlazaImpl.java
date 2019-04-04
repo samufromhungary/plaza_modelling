@@ -15,7 +15,7 @@ public class PlazaImpl implements Plaza {
     }
     @Override
     public List<Shop> getShops() throws PlazaIsClosedException {
-        if(isOpen == true){
+        if(isOpen){
             return shops;
         }
         throw new PlazaIsClosedException();
@@ -23,7 +23,7 @@ public class PlazaImpl implements Plaza {
 
     @Override
     public void addShop(Shop shop) throws ShopAlreadyExistsException, PlazaIsClosedException {
-        if (isOpen == true){
+        if (isOpen){
             try{
                 findShopByName(shop.getName());
                 throw new ShopAlreadyExistsException();
@@ -37,10 +37,10 @@ public class PlazaImpl implements Plaza {
 
     @Override
     public void removeShop(Shop shop) throws NoSuchShopException, PlazaIsClosedException {
-        if (isOpen == true){
+        if (isOpen){
             Shop choosenShop = null;
             for (Shop part : shops){
-                if (shop.equals(choosenShop)){
+                if (shop.equals(part)){
                     choosenShop = shop;
                 }
             }
@@ -57,7 +57,7 @@ public class PlazaImpl implements Plaza {
 
     @Override
     public Shop findShopByName(String name) throws NoSuchShopException, PlazaIsClosedException {
-        if(isOpen == true){
+        if(isOpen){
             for(Shop choosen : shops){
                 if(name.equalsIgnoreCase(choosen.getName())){
                     return choosen;

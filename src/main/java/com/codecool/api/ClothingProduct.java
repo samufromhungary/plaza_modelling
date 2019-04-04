@@ -17,6 +17,6 @@ public class ClothingProduct extends Product {
     }
 
     public String toString(){
-        return null;
+        return "Name: " + getName() + " | Manufacturer: " + getManufacturer() + " | Material: " + getMaterial() + " | Barcode: " + getBarcode();
     }
 }

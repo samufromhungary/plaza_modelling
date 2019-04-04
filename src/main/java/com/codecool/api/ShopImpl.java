@@ -44,7 +44,7 @@ public class ShopImpl implements Shop {
 
     @Override
     public List<Product> getProducts() throws ShopIsClosedException {
-        if (isOpen == true){
+        if (isOpen){
             List<Product> productlist = new ArrayList<Product>();
             for(ShopEntryImpl iter : products.values()){
                 if(iter.getQuantity() >= 1){
@@ -58,7 +58,7 @@ public class ShopImpl implements Shop {
 
     @Override
     public Product findByName(String name) throws NoSuchProductException, ShopIsClosedException {
-        if(isOpen == true){
+        if(isOpen){
             for (ShopEntryImpl iter : products.values()){
                 if(name.equalsIgnoreCase(iter.getProduct().getName())){
                     return iter.getProduct();
@@ -72,32 +72,102 @@ public class ShopImpl implements Shop {
 
     @Override
     public float getPrice(long barcode) throws NoSuchProductException, ShopIsClosedException {
-        return 0;
+        if(isOpen){
+            ShopEntryImpl barcImpl = products.get(barcode);
+            if(barcImpl == null){
+                throw new NoSuchProductException();
+            }
+            return barcImpl.getPrice();
+        }else{
+            throw new ShopIsClosedException();
+        }
     }
 
     @Override
     public boolean hasProduct(long barcode) throws ShopIsClosedException {
-        return false;
+        if(isOpen){
+            ShopEntryImpl barcImpl = products.get(barcode);
+            if(barcImpl != null){
+                return true;
+            }
+            return false;
+        }else{
+            throw new ShopIsClosedException();
+        }
     }
 
     @Override
     public void addNewProduct(Product product, int quantity, float price) throws ProductAlreadyExistsException, ShopIsClosedException {
-
+        if(isOpen){
+            if(products.containsKey(product.getBarcode())){
+                throw new ProductAlreadyExistsException();
+            }else{
+                products.put(product.getBarcode(), new ShopEntryImpl(product, quantity, price));
+            }
+        }else{
+            throw new ShopIsClosedException();
+        }
     }
 
     @Override
     public void addProduct(long barcode, int quantity) throws NoSuchProductException, ShopIsClosedException {
-
+        if(isOpen){
+            if(hasProduct(barcode)){
+                for (ShopEntryImpl iter : products.values()){
+                    if (barcode == iter.getProduct().getBarcode()){
+                        iter.increase(quantity);
+                    }
+                }
+            }else if(!hasProduct(barcode)){
+                throw new NoSuchProductException();
+            }
+        }else{
+            throw new ShopIsClosedException();
+        }
     }
 
     @Override
     public Product buyProduct(long barcode) throws NoSuchProductException, OutOfStockException, ShopIsClosedException {
-        return null;
+        if(isOpen){
+            if(products.containsKey(barcode)){
+                for(ShopEntryImpl iter : products.values()){
+                    if(barcode == iter.getProduct().getBarcode()){
+                        if(iter.getQuantity() == 0){
+                            throw new OutOfStockException();
+                        }else{
+                            iter.decrease(1);
+                            return iter.getProduct();
+                        }
+                    }
+                }
+            }
+            throw new NoSuchProductException();
+        }else{
+            throw new ShopIsClosedException();
+        }
     }
 
     @Override
     public List<Product> buyProducts(long barcode, int quantity) throws NoSuchProductException, OutOfStockException, ShopIsClosedException {
-        return null;
+        if(isOpen){
+            List<Product> productlist = new ArrayList<Product>();
+            if (products.containsKey(barcode)){
+                for(ShopEntryImpl iter : products.values()){
+                    if(barcode == iter.getProduct().getBarcode()){
+                        if(iter.getQuantity() == 0){
+                            throw new OutOfStockException();
+                        }else{
+                            iter.decrease(quantity);
+                            productlist.add(iter.getProduct());
+                        }
+                    }
+                }return productlist;
+            }else{
+                throw new NoSuchProductException();
+            }
+        }else{
+            throw new ShopIsClosedException();
+        }
     }
 
     public String toString(){

@@ -19,7 +19,7 @@ public class FoodProduct extends Product {
     }
 
     public String toString(){
-        return null;
+        return "Name: " + getName() + " | Manufacturer: " + getManufacturer() + " | Calories: " + getCalories() + " | Barcode: " + getBarcode();
     }
 
 }

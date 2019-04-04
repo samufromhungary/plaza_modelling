@@ -13,6 +13,7 @@ public class CmdProgram {
     Menu menu1 = new Menu("Plaza modelling", new String[]{"Create a plaza", "Exit"});
     PlazaImpl plaza;
     Shop shop = null;
+    ShopMenu shopMenu;
 
     public CmdProgram(String[] args){
 
@@ -23,10 +24,9 @@ public class CmdProgram {
         int input1 = sc.nextInt();
         switch (input1){
             case 1:
-                System.out.println("Name your plaza:");
                 String input2 = sc.nextLine();
                 plaza = new PlazaImpl(input2);
-                Menu menu2 = new Menu(plaza.getName(), new String[]{"Check plaza status", "Open / Close plaza", "Enter a shop", "List shops", "Add a shop", "Remove a shop", "Exit"});
+                Menu menu2 = new Menu("\nPlaza simulation", new String[]{"Check plaza status", "Open / Close plaza", "Enter a shop", "List shops", "Add a shop", "Remove a shop", "Exit"});
                 while (true){
                     menu2.displayMenu();
                     System.out.println("What do you want to do next?");
@@ -50,16 +50,13 @@ public class CmdProgram {
                             System.out.println("Enter name:");
                             String input4 = sc.nextLine();
                             try{
-                                plaza.findShopByName(input4);
+                                shopMenu.menuList(plaza.findShopByName(input4));
                             }catch (NoSuchShopException | PlazaIsClosedException e){
                                 System.out.println(e);
                             }break;
                         case 4:
-                            try{
-                                plaza.getShops();
-                            }catch (PlazaIsClosedException e){
-                                   System.out.println(e);
-                            }break;
+                            shopMenu.list(plaza);
+                            break;
                         case 5:
                             System.out.println("Give it a name:");
                             String input5 = sc.nextLine();
