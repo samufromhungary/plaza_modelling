@@ -1,7 +1,7 @@
 package com.codecool.api;
 
-public class YearlyRevenueIsTooHighException extends Exception {
-    public YearlyRevenueIsTooHighException() {
+public class YearlyRevenueIsTooLowException extends Exception {
+    public YearlyRevenueIsTooLowException() {
         super("The yearly revenue of this shop is too low for this plaza.");
     }
 }

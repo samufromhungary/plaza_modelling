@@ -4,7 +4,7 @@ import java.util.List;
 
 public class CityPlaza extends AbstractPlaza {
 
-    private int yearly_Revenue = 5000;
+    private int yearly_Revenue;
 
     public CityPlaza(String name, List<Shop> shops, int yearly_Revenue) {
         super(name, shops);
@@ -12,7 +12,7 @@ public class CityPlaza extends AbstractPlaza {
     }
 
     @Override
-    public void addShop(Shop shop) throws ShopAlreadyExistsException, PlazaIsClosedException, YearlyRevenueIsTooHighException{
+    public void addShop(Shop shop) throws ShopAlreadyExistsException, PlazaIsClosedException, YearlyRevenueIsTooLowException {
         if (isOpen){
             if(shop.getYearlyRevenue() >= yearly_Revenue){
                 try{
@@ -22,7 +22,7 @@ public class CityPlaza extends AbstractPlaza {
                     shops.add(shop);
                 }
             }else{
-                throw new YearlyRevenueIsTooHighException();
+                throw new YearlyRevenueIsTooLowException();
             }
         }else{
             throw new PlazaIsClosedException();

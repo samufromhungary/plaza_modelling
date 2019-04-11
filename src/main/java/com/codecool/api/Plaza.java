@@ -6,7 +6,7 @@ public interface Plaza {
 
     public List<Shop> getShops() throws PlazaIsClosedException;
 
-    public void addShop(Shop shop) throws ShopAlreadyExistsException, PlazaIsClosedException, YearlyRevenueIsTooHighException, TooMuchShopsException;
+    public void addShop(Shop shop) throws ShopAlreadyExistsException, PlazaIsClosedException, YearlyRevenueIsTooLowException, TooMuchShopsException;
 
     public void removeShop(Shop shop) throws NoSuchShopException, PlazaIsClosedException;
 

@@ -82,7 +82,7 @@ public class CmdProgram {
                             }
                             try{
                                 plaza.addShop(new ShopImpl(input5, input6, Integer.valueOf(revenueOfPlaza)));
-                            }catch(ShopAlreadyExistsException |PlazaIsClosedException |YearlyRevenueIsTooHighException | TooMuchShopsException e){
+                            }catch(ShopAlreadyExistsException |PlazaIsClosedException | YearlyRevenueIsTooLowException | TooMuchShopsException e){
                                 System.out.println(e);
                             }break;
                         case 6:

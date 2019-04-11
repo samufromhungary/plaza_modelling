@@ -4,7 +4,7 @@ import java.util.List;
 
 public class RuralPlaza extends AbstractPlaza {
 
-    public int maxShops = 5;
+    public int maxShops;
     public int shopCounter = 0;
 
 
