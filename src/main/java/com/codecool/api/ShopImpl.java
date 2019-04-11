@@ -10,11 +10,13 @@ public class ShopImpl implements Shop {
     private String owner;
     private Map<Long, ShopEntryImpl> products;
     private boolean isOpen;
+    private int yearlyRevenue;
 
-    public ShopImpl(String name, String owner) {
+    public ShopImpl(String name, String owner, int yearlyRevenue) {
         this.name = name;
         this.owner = owner;
         this.products = new HashMap<Long, ShopEntryImpl>();
+        this.yearlyRevenue = yearlyRevenue;
     }
 
 
@@ -148,6 +150,15 @@ public class ShopImpl implements Shop {
     }
 
     @Override
+    public int getYearlyRevenue() {
+        return yearlyRevenue;
+    }
+
+    public void setYearlyRevenue(int yearlyRevenue) {
+        this.yearlyRevenue = yearlyRevenue;
+    }
+
+    @Override
     public List<Product> buyProducts(long barcode, int quantity) throws NoSuchProductException, OutOfStockException, ShopIsClosedException {
         if(isOpen){
             List<Product> productlist = new ArrayList<Product>();
@@ -168,6 +179,8 @@ public class ShopImpl implements Shop {
         }else{
             throw new ShopIsClosedException();
         }
+
+
     }
 
     public String toString(){

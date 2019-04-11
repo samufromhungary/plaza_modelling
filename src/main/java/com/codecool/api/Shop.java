@@ -8,6 +8,8 @@ public interface Shop {
 
     public String getOwner();
 
+    public int getYearlyRevenue();
+
     public boolean isOpen();
 
     public void open();
@@ -29,6 +31,7 @@ public interface Shop {
     public Product buyProduct(long barcode) throws NoSuchProductException, OutOfStockException, ShopIsClosedException;
 
     public List<Product> buyProducts(long barcode, int quantity) throws NoSuchProductException, OutOfStockException, ShopIsClosedException;
+
 
     public String toString();
 
